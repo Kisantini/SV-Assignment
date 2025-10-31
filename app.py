@@ -14,7 +14,7 @@ st.set_page_config(page_title="Rape Statistics in India", layout="wide")
 # ---------------------
 @st.cache_data
 def load_data():
-    df = pd.read_csv("Rape_cases_dataset.csv")
+    df = pd.read_csv("Rape cases dataset.csv")
     df.columns = df.columns.str.strip()  # Clean column names
     return df
 
