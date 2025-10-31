@@ -14,4 +14,12 @@ menu = st.sidebar.radio(
     ["Home", "Objective 1", "Objective 2", "Objective 3"]
 )
 
-pg.run
+# Page routing
+if menu == "Home":
+    Home.app()
+elif menu == "Objective 1":
+    Objective1.app()
+elif menu == "Objective 2":
+    Objective2.app()
+elif menu == "Objective 3":
+    Objective3.app()
