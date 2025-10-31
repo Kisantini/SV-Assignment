@@ -4,7 +4,7 @@ import plotly.express as px
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-def app():
+def show():
     st.title("Objective 2: Trends and Annual Changes (2018–2019)")
     st.write("""
     **Goal:** To analyze the annual change in rape rate and total cases across Indian states between 2018 and 2019.
