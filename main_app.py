@@ -16,10 +16,10 @@ page = st.sidebar.radio(
 
 # Routing
 if page == "Home":
-    home.show()
+    Home.show()
 elif page == "Objective 1":
-    objective1.show()
+    Objective1.show()
 elif page == "Objective 2":
-    objective2.show()
+    Objective2.show()
 elif page == "Objective 3":
-    objective3.show()
+    Objective3.show()
