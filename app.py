@@ -7,14 +7,14 @@ import matplotlib.pyplot as plt
 # ---------------------
 # PAGE CONFIGURATION
 # ---------------------
-st.set_page_config(page_title="Rape Statistics in India (2019)", layout="wide")
+st.set_page_config(page_title="Rape Statistics in India", layout="wide")
 
 # ---------------------
 # LOAD DATA
 # ---------------------
 @st.cache_data
 def load_data():
-    df = pd.read_csv("rape_statistics.csv")
+    df = pd.read_csv("Rape_cases_dataset.csv")
     df.columns = df.columns.str.strip()  # Clean column names
     return df
 
