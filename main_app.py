@@ -10,6 +10,7 @@ st.set_page_config(page_title="Rape Cases in India (2019)", layout="wide")
 # Sidebar menu
 st.sidebar.title("📊 Navigation Menu")
 menu = st.sidebar.radio(
+    "Go to",
     ["Home", "Objective 1", "Objective 2", "Objective 3"]
 )
 
@@ -22,4 +23,3 @@ elif menu == "Objective 2":
     Objective2.app()
 elif menu == "Objective 3":
     Objective3.app()
-
