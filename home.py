@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-def app():
+def show():
     st.title("🏠 Home – Rape Cases in India (2019)")
 
     st.write("""
