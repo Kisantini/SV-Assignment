@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-def app():
+def show():
     st.title("Objective 1: Distribution of Rape Cases Across States (2019)")
     st.write("""
     **Goal:** To understand how rape cases are distributed across different states 
