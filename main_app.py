@@ -1,8 +1,8 @@
 import streamlit as st
-import home
-import objective1
-import objective2
-import objective3
+import Home
+import Objective1
+import Objective2
+import Objective3
 
 # Page setup
 st.set_page_config(page_title="Rape Cases Visualization", layout="wide")
