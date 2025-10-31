@@ -1,8 +1,8 @@
 import streamlit as st
-import Home
-import Objective1
-import Objective2
-import Objective3
+import home
+import objective1
+import objective2
+import objective3
 
 # Page setup
 st.set_page_config(page_title="Rape Cases Visualization", layout="wide")
@@ -14,12 +14,12 @@ page = st.sidebar.radio(
     ("Home", "Objective 1", "Objective 2", "Objective 3")
 )
 
-# Routing
+# Routing (call the right page)
 if page == "Home":
-    Home.show()
+    home.show()
 elif page == "Objective 1":
-    Objective1.show()
+    objective1.show()
 elif page == "Objective 2":
-    Objective2.show()
+    objective2.show()
 elif page == "Objective 3":
-    Objective3.show()
+    objective3.show()
