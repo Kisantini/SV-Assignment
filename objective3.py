@@ -4,7 +4,7 @@ import plotly.express as px
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-def app():
+def show():
     st.title("Objective 3: Correlation Between Rape Cases and Related Crimes")
 
     st.write("""
