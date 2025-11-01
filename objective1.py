@@ -107,14 +107,9 @@ def show():
     st.subheader("💬 Interpretation / Discussion")
     st.write("""
     The visualizations clearly depict uneven distribution of rape cases across India.  
-    States with higher populations and greater urban density—such as **Rajasthan, Madhya Pradesh, and Uttar Pradesh**—
-    record the most cases, though not necessarily the highest rates when adjusted for population.  
-    The pie chart emphasizes that **adult women (18+) are the most affected**, highlighting gender-based vulnerability 
-    among adult populations.  
-    The histogram distribution shows that most states have moderate rape rates, 
-    but outliers such as **Assam and Delhi** exhibit disproportionately high rates relative to population.  
-    These results imply that both **population structure and local socio-cultural conditions** 
-    influence the frequency and reporting of rape incidents.  
-    Policymakers should focus on awareness, education, and stricter law enforcement 
-    in states displaying both high total and high relative rates.
+    States with higher populations and greater urban density such as **Rajasthan, Madhya Pradesh, and Uttar Pradesh** record the most cases, though not necessarily the highest rates when adjusted for population.  
+    The pie chart emphasizes that **adult women (18+) are the most affected**, highlighting gender based vulnerability among adult populations.  
+    The histogram distribution shows that most states have moderate rape rates, but outliers such as **Assam and Delhi** exhibit disproportionately high rates relative to population.  
+    These results imply that both **population structure and local socio cultural conditions** influence the frequency and reporting of rape incidents.  
+    Policymakers should focus on awareness, education, and stricter law enforcement in states displaying both high total and high relative rates.
     """)
