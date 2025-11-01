@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 def show():
     st.title("Objective 2: Annual Change and Trend Analysis (2018–2019)")
     st.write("""
-    **Goal:** To study the yearly change in rape cases and rape rates between 2018 and 2019 
-    and identify which states experienced increases or decreases in reported incidents.
+    **Goal:** To examine the yearly change in rape rates and case numbers across Indian states 
+    between 2018 and 2019, highlighting states that experienced significant improvement or deterioration.
     """)
 
     # -----------------------------
@@ -36,56 +36,53 @@ def show():
     )
     fig1.update_layout(xaxis_title="State / UT", yaxis_title="Rate Change (per 100,000 population)")
     st.plotly_chart(fig1, use_container_width=True)
-    st.caption("🔍 *Positive values indicate a rise in rape rate; negative values indicate a decrease.*")
+    st.caption("🔍 *A positive value means the rape rate increased compared to 2018, while negative values indicate improvement.*")
 
     # =============================
-    # 2️⃣ Scatter Plot – Change in Cases vs Change in Rape Rate
+    # 2️⃣ Bar Chart – Comparison of Total Cases vs Rate Change
     # =============================
-    st.subheader("2️⃣ Relationship Between Case Change and Rate Change")
-    fig2 = px.scatter(
-        df,
-        x="Annual Change in Cases (2018-19)",
-        y="Annual Change in Rape Rate (2018-19)",
-        text="State/UT",
-        color="2019 Rape Rate (per 100k pop)",
-        size="Total Rape Cases 2019",
-        title="Scatter: Annual Change in Case Numbers vs Rate Change"
+    st.subheader("2️⃣ Comparison of Total Cases and Rate Change (2019)")
+    fig2 = px.bar(
+        df.sort_values(by="Annual Change in Rape Rate (2018-19)", ascending=False),
+        x="State/UT",
+        y=["Total Rape Cases 2019", "Annual Change in Rape Rate (2018-19)"],
+        barmode="group",
+        title="Comparison: Total Rape Cases vs Annual Rate Change (2018–2019)",
+        labels={"value": "Values", "variable": "Metric"}
     )
-    fig2.update_layout(xaxis_title="Change in Total Cases (2018–2019)", yaxis_title="Change in Rape Rate")
     st.plotly_chart(fig2, use_container_width=True)
-    st.caption("🔍 *States with large increases in total cases often show parallel increases in rape rates.*")
+    st.caption("🔍 *The grouped bars show how states with higher case counts also tend to experience larger changes in rate.*")
 
     # =============================
-    # 3️⃣ Correlation Heatmap – Relationship Among Key Indicators
+    # 3️⃣ Area Chart – Trend of Rate Change Across States
     # =============================
-    st.subheader("3️⃣ Correlation Among Key Indicators")
-    corr_cols = [
-        "2019 Rape Rate (per 100k pop)",
-        "Annual Change in Rape Rate (2018-19)",
-        "Annual Change in Cases (2018-19)"
-    ]
-    fig3, ax = plt.subplots(figsize=(6, 4))
-    sns.heatmap(df[corr_cols].corr(), annot=True, cmap="coolwarm", fmt=".2f", ax=ax)
-    ax.set_title("Correlation Heatmap: Rate and Case Changes (2018–2019)")
-    st.pyplot(fig3)
-    st.caption("🔍 *Positive correlation shows that case count changes and rate changes are strongly related across states.*")
+    st.subheader("3️⃣ Distribution of Rate Changes Across States")
+    sorted_rate = df.sort_values(by="Annual Change in Rape Rate (2018-19)")
+    fig3 = px.area(
+        sorted_rate,
+        x="State/UT",
+        y="Annual Change in Rape Rate (2018-19)",
+        color_discrete_sequence=["#ff7f50"],
+        title="Positive and Negative Rape Rate Changes (2018–2019)"
+    )
+    fig3.update_layout(xaxis_title="State / UT", yaxis_title="Rate Change (per 100,000 population)")
+    st.plotly_chart(fig3, use_container_width=True)
+    st.caption("🔍 *The area chart visually separates states with positive and negative changes, highlighting overall patterns.*")
 
     # =============================
-    # 🧾 Summary Box (100–150 words)
+    # 🧾 Summary Box (Black Background)
     # =============================
     st.subheader("📦 Summary Box")
     st.markdown("""
-    <div style="background-color:#f7f7f9; padding:15px; border-radius:10px;">
-    <p style="text-align:justify;">
-    The trend analysis for 2018–2019 reveals varied changes in rape rates across Indian states. 
-    Some regions, such as Rajasthan and Assam, experienced slight increases in both total cases and rate per population, 
-    indicating continued vulnerability. Others, such as Andhra Pradesh and Gujarat, showed mild improvements, 
-    suggesting enhanced preventive actions or underreporting. 
-    The scatter plot confirms a positive correlation between annual change in case numbers 
-    and rate change — states with more new cases also show greater rate increases. 
-    The correlation heatmap reinforces this link, highlighting that the rate of occurrence 
-    tends to rise proportionally with the absolute case count. 
-    These findings illustrate the interconnected nature of case volume and rate trends across regions.
+    <div style="background-color:#1e1e1e; padding:15px; border-radius:10px;">
+    <p style="color:white; text-align:justify;">
+    The comparative analysis between 2018 and 2019 reveals that rape rate changes vary significantly across Indian states. 
+    States such as Rajasthan and Assam experienced a clear rise in rape rates, while regions like Gujarat and Andhra Pradesh 
+    recorded modest decreases. The bar visualization confirms that areas with a larger number of cases also tend to exhibit 
+    more substantial changes in their rate per population, suggesting a close link between total case volume and rate variation. 
+    The area chart shows that most states lie close to the neutral line, indicating minor fluctuations, while a few outliers 
+    stand out with noticeable increases. Overall, this trend reflects the need for more consistent reporting systems 
+    and focused preventive measures in high-variation states.
     </p>
     </div>
     """, unsafe_allow_html=True)
@@ -95,14 +92,14 @@ def show():
     # =============================
     st.subheader("💬 Interpretation / Discussion")
     st.write("""
-    The analysis clearly shows that rape rate changes are closely tied to total case variations across states.  
-    Most regions experienced only minor fluctuations between 2018 and 2019, 
-    but some states such as **Rajasthan, Madhya Pradesh, and Assam** reported notable increases, 
-    reflecting both rising incidents and possibly better reporting mechanisms.  
-    On the other hand, states with negative rate change values indicate improvement, 
-    which could result from successful awareness campaigns or reporting inconsistencies.  
-    The correlation heatmap further validates that **states with a higher surge in total cases 
-    tend to show proportional increases in population-adjusted rates**.  
-    These insights suggest that policy responses must combine both **law enforcement and community education**, 
-    especially in states where both metrics have simultaneously increased.
+    The visualizations demonstrate that while most states maintained relatively stable rape rates between 2018 and 2019, 
+    a handful of regions displayed substantial changes. States like **Rajasthan, Assam, and Madhya Pradesh** 
+    show significant increases in rate and total case numbers, which could stem from higher reporting awareness 
+    or actual growth in incidents. Conversely, states with slight declines indicate improvements in either reporting 
+    control or prevention efforts.  
+    The grouped bar chart visually supports the hypothesis that **higher case volumes tend to correspond with 
+    greater rate volatility**, indicating population-normalized growth.  
+    The area chart makes the national trend clearer—most states fluctuate around zero, meaning the overall change 
+    was relatively small nationwide.  
+    This finding highlights the importance of **sustained data-driven monitoring and localized intervention programs**.
     """)
