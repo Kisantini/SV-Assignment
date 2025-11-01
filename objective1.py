@@ -60,5 +60,5 @@ def show():
     st.subheader("3️⃣ Distribution of Rape Rate (per 100,000 Population)")
     fig3, ax = plt.subplots(figsize=(7, 4))
     sns.histplot(df["2019 Rape Rate (per 100k pop)"], bins=10, kde=True, color="#007acc", ax=ax)
-    ax.set_xlabe_
+    ax.set_xlabel()
 
