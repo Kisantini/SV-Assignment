@@ -23,24 +23,27 @@ def show():
     df = load_data()
 
     # =============================
-    # 1️⃣ Scatter Plot – Relationship Between Crimes
+    # 1️⃣ Dual Bar Chart – Rape vs Kidnapping by State
     # =============================
-    st.subheader("1️⃣ Rape Cases vs Kidnapping for Marriage (IPC 366)")
-    fig1 = px.scatter(
-        df,
-        x="Total Rape Cases 2019",
-        y="Kidnapping/Abduction for Marriage (IPC 366)",
-        color="2019 Rape Rate (per 100k pop)",
-        size="Total Rape Cases 2019",
-        text="State/UT",
-        title="Relationship Between Rape and Kidnapping/Abduction for Marriage Cases (2019)"
+    st.subheader("1️⃣ Comparison of Rape and Kidnapping Cases by State")
+    sorted_df = df.sort_values(by="Total Rape Cases 2019", ascending=False)
+    fig1 = px.bar(
+        sorted_df,
+        x="State/UT",
+        y=["Total Rape Cases 2019", "Kidnapping/Abduction for Marriage (IPC 366)"],
+        barmode="group",
+        title="State-wise Comparison of Rape vs Kidnapping/Abduction Cases (2019)",
+        labels={"value": "Number of Cases", "variable": "Crime Type"},
+        color_discrete_sequence=["#ff6361", "#58508d"]
     )
     fig1.update_layout(
-        xaxis_title="Total Rape Cases (2019)",
-        yaxis_title="Kidnapping/Abduction for Marriage (IPC 366)"
+        xaxis_title="State / UT",
+        yaxis_title="Number of Cases",
+        legend_title_text="Crime Type",
+        bargap=0.2
     )
     st.plotly_chart(fig1, use_container_width=True)
-    st.caption("🔍 *States with higher rape cases generally report more kidnapping incidents too, showing a positive relationship.*")
+    st.caption("🔍 *The grouped bars make it easy to compare both crimes across states. States with higher rape cases also tend to have higher kidnapping/abduction cases.*")
 
     # =============================
     # 2️⃣ Horizontal Bar Chart – Compare Rape vs Kidnapping by State
