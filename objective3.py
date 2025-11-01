@@ -1,16 +1,14 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 def show():
     st.title("Objective 3: Correlation Between Rape Cases and Related Crimes")
     st.write("""
-    **Goal:** To explore the relationship between rape cases and related crimes such as 
+    **Goal:** To understand the relationship between rape cases and related crimes such as 
     kidnapping or abduction for marriage (IPC 366) across Indian states. 
-    This helps identify whether states with higher rape incidences also report 
-    higher occurrences of these associated crimes.
+    The objective is to identify whether states with high rape incidences also show 
+    higher levels of related crimes.
     """)
 
     # -----------------------------
@@ -25,7 +23,7 @@ def show():
     df = load_data()
 
     # =============================
-    # 1️⃣ Scatter Plot – Rape Cases vs Kidnapping (IPC 366)
+    # 1️⃣ Scatter Plot – Relationship Between Crimes
     # =============================
     st.subheader("1️⃣ Rape Cases vs Kidnapping for Marriage (IPC 366)")
     fig1 = px.scatter(
@@ -35,42 +33,46 @@ def show():
         color="2019 Rape Rate (per 100k pop)",
         size="Total Rape Cases 2019",
         text="State/UT",
-        title="Relationship Between Rape Cases and Kidnapping for Marriage (IPC 366)"
+        title="Relationship Between Rape and Kidnapping/Abduction for Marriage Cases (2019)"
     )
-    fig1.update_layout(xaxis_title="Total Rape Cases (2019)", yaxis_title="Kidnapping/Abduction for Marriage (Cases)")
+    fig1.update_layout(
+        xaxis_title="Total Rape Cases (2019)",
+        yaxis_title="Kidnapping/Abduction for Marriage (IPC 366)"
+    )
     st.plotly_chart(fig1, use_container_width=True)
-    st.caption("🔍 *A visible upward trend shows that states with more rape cases tend to have higher kidnapping incidents too.*")
+    st.caption("🔍 *States with higher rape cases generally report more kidnapping incidents too, showing a positive relationship.*")
 
     # =============================
-    # 2️⃣ Box Plot – Distribution of Kidnapping/Abduction Cases Across States
+    # 2️⃣ Horizontal Bar Chart – Compare Rape vs Kidnapping by State
     # =============================
-    st.subheader("2️⃣ Distribution of Kidnapping/Abduction for Marriage Cases (IPC 366)")
-    fig2 = px.box(
-        df,
-        y="Kidnapping/Abduction for Marriage (IPC 366)",
-        points="all",
-        title="Spread of Kidnapping/Abduction for Marriage Cases Across States (2019)",
-        color_discrete_sequence=["#ff7f50"]
+    st.subheader("2️⃣ Comparison of Rape and Kidnapping Cases by State (Top 10)")
+    top10 = df.sort_values(by="Total Rape Cases 2019", ascending=False).head(10)
+    fig2 = px.bar(
+        top10,
+        y="State/UT",
+        x=["Total Rape Cases 2019", "Kidnapping/Abduction for Marriage (IPC 366)"],
+        orientation="h",
+        barmode="group",
+        title="Top 10 States: Rape vs Kidnapping/Abduction for Marriage Cases (2019)",
+        labels={"value": "Number of Cases", "variable": "Crime Type"}
     )
-    fig2.update_layout(yaxis_title="Number of Kidnapping/Abduction Cases")
     st.plotly_chart(fig2, use_container_width=True)
-    st.caption("🔍 *The box plot shows that a few states have extremely high kidnapping counts, while most remain near the lower range.*")
+    st.caption("🔍 *This grouped bar chart makes it easy to compare both crimes side by side for each major state.*")
 
     # =============================
-    # 3️⃣ Correlation Heatmap – Relationship Among Key Indicators
+    # 3️⃣ Pie Chart – National-Level Proportion of Crimes
     # =============================
-    st.subheader("3️⃣ Correlation Heatmap of Crime Indicators")
-    selected_cols = [
-        "Total Rape Cases 2019",
-        "2019 Rape Rate (per 100k pop)",
-        "Annual Change in Rape Rate (2018-19)",
-        "Kidnapping/Abduction for Marriage (IPC 366)"
-    ]
-    fig3, ax = plt.subplots(figsize=(7, 4))
-    sns.heatmap(df[selected_cols].corr(), annot=True, cmap="coolwarm", fmt=".2f", ax=ax)
-    ax.set_title("Correlation Among Rape and Related Crime Variables")
-    st.pyplot(fig3)
-    st.caption("🔍 *High positive correlation values indicate that regions with more rape cases also experience more kidnapping incidents.*")
+    st.subheader("3️⃣ Overall Proportion of Rape vs Kidnapping Cases in India (2019)")
+    total_rape = df["Total Rape Cases 2019"].sum()
+    total_kidnap = df["Kidnapping/Abduction for Marriage (IPC 366)"].sum()
+    fig3 = px.pie(
+        values=[total_rape, total_kidnap],
+        names=["Total Rape Cases", "Kidnapping/Abduction (IPC 366)"],
+        color_discrete_sequence=["#ff6361", "#58508d"],
+        title="Overall Share of Rape and Kidnapping/Abduction Cases (2019)"
+    )
+    st.plotly_chart(fig3, use_container_width=True)
+    st.caption("🔍 *Nationally, rape cases form a larger proportion, but kidnapping/abduction incidents also represent a major concern.*")
 
     # =============================
     # 🧾 Summary Box (Black Background)
@@ -79,15 +81,15 @@ def show():
     st.markdown("""
     <div style="background-color:#1e1e1e; padding:15px; border-radius:10px;">
     <p style="color:white; text-align:justify;">
-    This analysis reveals a close association between rape cases and related crimes like 
-    kidnapping or abduction for marriage (IPC 366). The scatter plot highlights a strong 
-    positive relationship, where states reporting more rape cases also record higher kidnapping incidents. 
-    The box plot shows significant variation, with a few states emerging as outliers with extremely 
-    high kidnapping numbers, while most states fall within a moderate range. 
-    The correlation heatmap confirms that these crimes are positively correlated, 
-    suggesting shared underlying causes such as gender inequality, social pressure, 
-    and inadequate legal deterrence. These findings emphasize the importance of coordinated 
-    preventive measures and improved enforcement mechanisms across regions.
+    The comparative analysis between rape cases and kidnapping/abduction for marriage (IPC 366) 
+    highlights a consistent positive relationship across states. 
+    The scatter plot clearly shows that regions with higher rape cases also tend to report 
+    more kidnapping crimes. The horizontal bar chart provides an easy side-by-side comparison 
+    for major states such as Rajasthan, Uttar Pradesh, and Bihar, which exhibit particularly 
+    high levels of both crimes. The pie chart emphasizes that although rape cases remain the 
+    majority, kidnapping offenses account for a significant share of total gender-related crimes. 
+    These visuals collectively demonstrate the interconnected nature of gender-based offenses 
+    and underline the urgent need for comprehensive awareness, legal protection, and enforcement efforts.
     </p>
     </div>
     """, unsafe_allow_html=True)
@@ -97,15 +99,14 @@ def show():
     # =============================
     st.subheader("💬 Interpretation / Discussion")
     st.write("""
-    The updated visuals provide a clearer picture of how related crimes interact across regions.  
-    The scatter plot shows a **strong positive correlation** between rape and kidnapping-for-marriage cases, 
-    implying shared social roots and behavioral patterns.  
-    The **box plot** highlights that most states report relatively low kidnapping rates, 
-    but a few (like **Rajasthan, Uttar Pradesh, and Bihar**) act as statistical outliers — 
-    representing much higher incident counts than the national average.  
-    These outliers suggest deep-rooted cultural and socio-economic factors influencing both crimes.  
-    The heatmap strengthens this observation, confirming a **consistent positive relationship** 
-    among crime categories.  
-    Overall, the analysis underlines the need for **comprehensive social reform, education programs, 
-    and better coordination between law enforcement agencies** to mitigate such interconnected offenses.
+    The simplified visuals reveal a clear and strong connection between rape and kidnapping/abduction incidents.  
+    **States with higher rape reports — such as Rajasthan, Uttar Pradesh, and Bihar — also show high kidnapping levels**, 
+    suggesting similar social and cultural risk factors.  
+    The grouped bar chart allows easy state-wise comparison, confirming that high population regions 
+    contribute heavily to both crimes. The national pie chart clarifies that while rape cases dominate numerically, 
+    kidnapping-for-marriage remains a persistent parallel issue.  
+    This pattern implies that these crimes often coexist under shared conditions such as gender inequality, 
+    weak deterrence, and inadequate awareness.  
+    Thus, the findings highlight the importance of **integrated preventive strategies**, 
+    combining education, legal reform, and stronger community engagement to reduce these intertwined crimes.
     """)
