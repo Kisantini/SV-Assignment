@@ -52,22 +52,34 @@ def show():
     )
     st.plotly_chart(fig2, use_container_width=True)
 
-    # =============================
-    # 3️⃣ Histogram – Frequency of Rape Rates Across States
-    # =============================
-    st.subheader("3️⃣ Distribution of Rape Rate (per 100,000 Population)")
-    fig3, ax = plt.subplots(figsize=(7, 4))
-    sns.histplot(
-        df["2019 Rape Rate (per 100k pop)"],
-        bins=10,
-        kde=True,
-        color="#007acc",
-        ax=ax
-    )
-    ax.set_xlabel("Rape Rate per 100,000 Population")
-    ax.set_ylabel("Number of States/UTs")
-    ax.set_title("Distribution of Rape Rate Across States (2019)")
-    st.pyplot(fig3)
+# =============================
+# 3️⃣ Horizontal Bar Chart – Rape Rate (per 100,000 Population)
+# =============================
+st.subheader("3️⃣ Rape Rate (per 100,000 Population) by State")
+
+# Sort data by rape rate
+rate_sorted = df.sort_values(by="2019 Rape Rate (per 100k pop)", ascending=True)
+
+# Create horizontal bar chart
+fig3 = px.bar(
+    rate_sorted,
+    x="2019 Rape Rate (per 100k pop)",
+    y="State/UT",
+    orientation="h",
+    color="2019 Rape Rate (per 100k pop)",
+    color_continuous_scale="Reds",
+    title="Rape Rate per 100,000 Population by State (2019)",
+)
+
+fig3.update_layout(
+    xaxis_title="Rape Rate (per 100,000 Population)",
+    yaxis_title="State / UT",
+    plot_bgcolor="rgba(0,0,0,0)",
+)
+
+st.plotly_chart(fig3, use_container_width=True)
+st.caption("🔍 *This chart shows the variation in rape rates across states, highlighting regions with the highest risk per population unit.*")
+
 
     # =============================
     # 🧾 Summary Box
