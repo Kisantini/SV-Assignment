@@ -86,7 +86,7 @@ def show():
     # =============================
     st.subheader("📦 Summary Box")
     st.markdown("""
-    <div style="background-color:#FFFFFF; padding:15px; border-radius:10px;">
+    <div style="background-color:#f0f2f6; padding:15px; border-radius:10px;">
     <p style="text-align:justify;">
     The analysis of rape case distribution in 2019 reveals clear regional and demographic trends. 
     The bar chart shows that northern and central states such as Rajasthan, Uttar Pradesh, and Madhya Pradesh 
